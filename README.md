@@ -1,4 +1,4 @@
-# Device-Agnostic Design Course Project I - 2d926edb-cc8f-4d08-9031-d329f4c841dd
+# Device-Agnostic Design Course Project I
 
 Write your documentation for the project below.
 
