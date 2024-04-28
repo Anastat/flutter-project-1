@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 
-import '../services/answer_service.dart';
+import 'correct_answer_widget.dart';
+import 'incorrect_answer_widget.dart';
 
-class AnswerWidget extends StatelessWidget {
+import '../services/question_service.dart';
+
+class AnswerFutureWidget extends StatelessWidget {
+  final Question question;
   final Future<bool> answer;
-  const AnswerWidget(this.answer);
+  final String questionPath;
+  const AnswerFutureWidget(this.question, this.answer, this.questionPath);
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
+    return FutureBuilder(
       future: answer,
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -19,12 +24,9 @@ class AnswerWidget extends StatelessWidget {
           return const Text("No answer.");
         } else {
           bool answer = snapshot.data!;
-          return IntrinsicWidth(
-              child: Column(
-            children: [
-              Text(answer.toString()),
-            ],
-          ));
+          return answer
+              ? CorrectAnswerWidget(questionPath)
+              : IncorrectAnswerWidget(question);
         }
       },
     );

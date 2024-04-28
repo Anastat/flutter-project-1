@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
-import 'package:project_1/services/topic_service.dart';
 import 'package:flutter/material.dart';
+
+import '../models/topic.dart';
 
 class TopicWidget extends StatelessWidget {
   final Topic topic;

@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class AnswerService {
+class AnswerApi {
   final _endpoint = 'https://dad-quiz-api.deno.dev';
 
   Future<bool> postAnswer(int topicId, int questionId, String answer) async {
@@ -13,10 +13,4 @@ class AnswerService {
     var data = jsonDecode(response.body);
     return data['correct'];
   }
-}
-
-class Answer {
-  bool response;
-
-  Answer(this.response);
 }
