@@ -11,9 +11,15 @@ class TopicNotifier extends StateNotifier<List<Topic>> {
     state = await topicApi.getTopics();
   }
 
-  updateCorrectAnswers(Topic topic) {
-    topic.correctAnswers++;
+  updateCorrectAnswers(int topicId) {
     state = [...state];
+    state = [
+      for (final topic in state)
+        if (topic.id == topicId)
+          topic.copyWith(correctAnswers: topic.correctAnswers++)
+        else
+          topic,
+    ];
   }
 }
 
@@ -22,4 +28,3 @@ final topicsProvider = StateNotifierProvider<TopicNotifier, List<Topic>>((ref) {
   tn._initialize();
   return tn;
 });
-

@@ -9,7 +9,7 @@ class TopBar extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Quiz"),
       ),
-      body: widget,
+      body: SingleChildScrollView(child: widget),
     );
   }
 }

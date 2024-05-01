@@ -13,7 +13,8 @@ class QuestionScreen extends StatelessWidget {
       Container(
           alignment: Alignment.topCenter,
           padding: const EdgeInsets.all(10),
-          child: QuestionFutureWidget(QuestionApi().getQuestion(topicId))),
+          child: QuestionFutureWidget(
+              QuestionApi().getQuestion(topicId), topicId)),
     );
   }
 }

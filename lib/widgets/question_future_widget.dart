@@ -5,7 +5,8 @@ import '../models/question.dart';
 
 class QuestionFutureWidget extends StatelessWidget {
   final Future<Question> question;
-  const QuestionFutureWidget(this.question);
+  final int topicId;
+  const QuestionFutureWidget(this.question, this.topicId);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class QuestionFutureWidget extends StatelessWidget {
           return const Text("No question data.");
         } else {
           Question question = snapshot.data!;
-          return QuestionWidget(question);
+          return QuestionWidget(question, topicId);
         }
       },
     );

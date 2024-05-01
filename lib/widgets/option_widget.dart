@@ -1,24 +1,16 @@
-import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 
-import '../models/question.dart';
-
 class OptionWidget extends StatelessWidget {
+  final Function select; // Callback function to update selected option
   final String option;
-  final Question question;
 
-  const OptionWidget(this.option, this.question);
+  const OptionWidget(this.select, this.option);
 
   @override
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.all(10),
         child: ElevatedButton(
-            onPressed: () => context.go(
-                Uri(
-                    path: question.answerPostPath,
-                    queryParameters: {'answer': option}).toString(),
-                extra: question),
-            child: Text(option)));
+            onPressed: () => select(option), child: Text(option)));
   }
 }

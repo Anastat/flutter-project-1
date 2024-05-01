@@ -1,17 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project_1/widgets/answer_future_widget.dart';
 import 'package:project_1/widgets/option_widget.dart';
 
 import '../models/question.dart';
+import '../providers/answer_provider.dart';
+import '../services/answer_api.dart';
 
-class QuestionWidget extends StatelessWidget {
+class QuestionWidget extends ConsumerWidget {
   final Question question;
-  const QuestionWidget(this.question);
+  final int topicId;
+  const QuestionWidget(this.question, this.topicId);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedOption = ref.watch(answerProvider);
+
+    void selectOption(option) {
+      ref.watch(answerProvider.notifier).update((state) => option);
+    }
+    // TODO: Hide question and options if answer is correct.
+
     return IntrinsicWidth(
         child: Column(
       children: [
+        if (selectedOption != '')
+          AnswerFutureWidget(
+              AnswerApi().postAnswer(topicId, question.id, selectedOption),
+              topicId),
         const SizedBox(height: 20),
         Text(question.question,
             textAlign: TextAlign.center,
@@ -25,7 +41,7 @@ class QuestionWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: question.options
-                  .map((option) => OptionWidget(option, question))
+                  .map((option) => OptionWidget(selectOption, option))
                   .toList(),
             ))
       ],

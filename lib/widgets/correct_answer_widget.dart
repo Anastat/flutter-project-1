@@ -1,13 +1,26 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
+import 'package:project_1/providers/topic_provider.dart';
 
-class CorrectAnswerWidget extends StatelessWidget {
-  final String questionPath;
+import '../providers/answer_provider.dart';
 
-  const CorrectAnswerWidget(this.questionPath);
+class CorrectAnswerWidget extends ConsumerWidget {
+  final int topicId;
+
+  const CorrectAnswerWidget(this.topicId);
+
+  _navigateToNext(BuildContext ctx, WidgetRef ref) {
+    // Increase number of correct answers.
+    ref.watch(topicsProvider.notifier).updateCorrectAnswers(topicId);
+    // Cleare the state of answer.
+    ref.watch(answerProvider.notifier).update((state) => '');
+    // Show the next question.
+    ctx.replace('/topics/$topicId/questions');
+  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return IntrinsicWidth(
         child: Column(children: [
       const SizedBox(height: 20),
@@ -22,7 +35,7 @@ class CorrectAnswerWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               ElevatedButton(
-                  onPressed: () => context.go(questionPath),
+                  onPressed: () => _navigateToNext(context, ref),
                   child: const Text("Next question"))
             ],
           ))
