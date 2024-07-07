@@ -1,4 +1,4 @@
-// TODO: Implement statistics by topics page 
+// TODO: Implement statistics by topics page
 
 /*
 The topic-specific statistics show the total number of correct answers per topic.
@@ -19,7 +19,18 @@ class StatisticsScreen extends StatelessWidget {
       Container(
           alignment: Alignment.topCenter,
           padding: const EdgeInsets.all(10),
-          child: StatisticsByTopics()),
+          child: Column(
+            children: [
+              const Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Text('Number of correct answers by topics:',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: const Color.fromARGB(255, 4, 113, 203),
+                      ))),
+              StatisticsByTopics()
+            ],
+          )),
     );
   }
 }

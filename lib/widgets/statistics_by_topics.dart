@@ -7,15 +7,17 @@ class StatisticsByTopics extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final topics = ref.watch(topicsProvider);
+    final sortedTopics = topics
+      ..sort((a, b) => b.correctAnswers.compareTo(a.correctAnswers));
 
-    if (topics.isEmpty) {
+    if (sortedTopics.isEmpty) {
       return const Text("No statistics.");
     } else {
       return IntrinsicWidth(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: topics.map((e) => TopicStatistics(e)).toList(),
+        children: sortedTopics.map((e) => TopicStatistics(e)).toList(),
       ));
     }
   }

@@ -12,8 +12,7 @@ class TopicNotifier extends StateNotifier<List<Topic>> {
 
   void _initialize() async {
     var topics = await topicApi.getTopics();
-    state = topics
-      ..sort((a, b) => b.correctAnswers.compareTo(a.correctAnswers));
+    state = topics;
   }
 
   void increaseCorrectAnswers(int topicId) {
@@ -27,7 +26,11 @@ class TopicNotifier extends StateNotifier<List<Topic>> {
     }
 
     // Update the state with the new state
-    state = newState
+    state = newState;
+  }
+
+  List<Topic> get sortedTopics {
+    return [...state]
       ..sort((a, b) => b.correctAnswers.compareTo(a.correctAnswers));
   }
 }
