@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_1/services/question_api.dart';
 import 'package:project_1/widgets/question_future_widget.dart';
-import '../providers/selected_topic_provider copy.dart';
+import '../providers/selected_topic_provider.dart';
 import '../widgets/top_bar.dart';
 
 class QuestionScreen extends ConsumerWidget {

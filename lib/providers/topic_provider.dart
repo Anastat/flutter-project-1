@@ -29,9 +29,10 @@ class TopicNotifier extends StateNotifier<List<Topic>> {
     state = newState;
   }
 
-  List<Topic> get sortedTopics {
-    return [...state]
+  Topic get genericPracticeTopic {
+    List<Topic> sortedTopics = [...state]
       ..sort((a, b) => b.correctAnswers.compareTo(a.correctAnswers));
+    return sortedTopics.last;
   }
 }
 

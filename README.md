@@ -24,4 +24,4 @@ TODO: list of dependencies and their versions
 TODO:
 
 - create tests
-- add gemeric practise (change selected topic after correct answer)
+- complete documentation

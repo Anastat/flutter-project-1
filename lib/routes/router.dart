@@ -3,7 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:project_1/providers/answer_provider.dart';
 import 'package:project_1/screens/correct_answer_screen.dart';
 
-import '../providers/selected_topic_provider copy.dart';
+import '../providers/is_generic_provider.dart';
+import '../providers/selected_topic_provider.dart';
 import '../screens/home_screen.dart';
 import '../screens/question_screen.dart';
 import '../screens/statistics_screen.dart';
@@ -17,6 +18,7 @@ final router = GoRouter(
         // Clear saved values
         Future.microtask(() {
           container.read(answerProvider.notifier).state = '';
+          container.read(isGenericPracticeProvider.notifier).state = false;
           container.read(selectedTopicProvider.notifier).clearSelection();
         });
 
@@ -31,7 +33,6 @@ final router = GoRouter(
         builder: (context, state) => const StatisticsScreen()),
     GoRoute(
         path: '/topics/:id/questions/correct',
-        builder: (context, state) =>
-            CorrectAnswerScreen(int.parse(state.params['id']!))),
+        builder: (context, state) => CorrectAnswerScreen()),
   ],
 );

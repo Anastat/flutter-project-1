@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 
 import '../models/topic.dart';
-import '../providers/selected_topic_provider copy.dart';
+import '../providers/selected_topic_provider.dart';
 
 class TopicWidget extends ConsumerWidget {
   final Topic topic;
