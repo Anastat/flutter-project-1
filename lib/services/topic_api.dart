@@ -8,11 +8,14 @@ class TopicApi {
 
   Future<List<Topic>> getTopics() async {
     var response = await http.get(Uri.parse(_endpoint));
+    var topics = <Topic>[];
 
-    return jsonDecode(response.body)
-        .map<Topic>((topic) => Topic.fromJson(topic))
-        .toList();
+    if (response.body.isNotEmpty) {
+      topics = jsonDecode(response.body)
+          .map<Topic>((topic) => Topic.fromJson(topic))
+          .toList();
+    }
+
+    return topics;
   }
 }
-
-

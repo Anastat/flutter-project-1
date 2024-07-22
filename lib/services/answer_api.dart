@@ -9,7 +9,6 @@ class AnswerApi {
       Uri.parse('$_endpoint/topics/$topicId/questions/$questionId/answers'),
       body: jsonEncode({'answer': answer}),
     );
-
     var data = jsonDecode(response.body);
     return data['correct'];
   }

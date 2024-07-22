@@ -14,7 +14,7 @@ class TopBar extends StatelessWidget {
         leadingWidth: 100,
         leading: Builder(builder: (BuildContext context) {
           if (currentRoute != "/") {
-            return ElevatedButton(
+            return TextButton(
               onPressed: () => context.go("/"),
               child: const Text("Topics"),
             );
@@ -24,7 +24,7 @@ class TopBar extends StatelessWidget {
         title: const Text("Quiz"),
         actions: [
           if (currentRoute != "/statistics")
-            ElevatedButton(
+            TextButton(
               onPressed: () => context.go("/statistics"),
               child: const Text("Statistics"),
             )

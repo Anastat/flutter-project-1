@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project_1/models/topic.dart';
+import 'package:project_1/providers/statistics_provider.dart';
+import 'package:project_1/providers/topic_provider.dart';
 import 'package:project_1/widgets/generic_practice.dart';
 import 'package:project_1/widgets/topic_list.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/horizontal_divider.dart';
 import '../widgets/top_bar.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen<List<Topic>>(topicsProvider, (previous, next) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      if (next.isNotEmpty && !prefs.containsKey("statistics")) {
+        ref.read(statisticsProvider.notifier).setInitialStatistics(next);
+      }
+    });
     return TopBar(
       Container(
           alignment: Alignment.topCenter,

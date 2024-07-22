@@ -3,10 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:project_1/providers/is_generic_provider.dart';
 import 'package:project_1/providers/selected_topic_provider.dart';
+import 'package:project_1/providers/statistics_provider.dart';
 
 import '../models/topic.dart';
 import '../providers/answer_provider.dart';
-import '../providers/topic_provider.dart';
 
 class CorrectAnswerWidget extends ConsumerWidget {
   _navigateToNext(BuildContext ctx, WidgetRef ref) {
@@ -18,7 +18,7 @@ class CorrectAnswerWidget extends ConsumerWidget {
     if (isGenericPractice) {
       // Update topic to practice
       Topic topicToPractice =
-          ref.read(topicsProvider.notifier).genericPracticeTopic;
+          ref.read(statisticsProvider.notifier).genericPracticeTopic;
       ref.read(selectedTopicProvider.notifier).selectTopic(topicToPractice);
     }
 

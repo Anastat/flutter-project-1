@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nock/nock.dart';
+import 'package:project_1/providers/statistics_provider.dart';
+import 'package:project_1/quiz_app.dart';
 import 'package:project_1/routes/router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'mock_data.dart';
+import 'mock_api.dart';
+import 'mock_shared.dart';
 
 void main() {
   setUpAll(() {
     setupNock();
     TestWidgetsFlutterBinding.ensureInitialized();
+    setupMockSharedPreferences();
   });
 
   setUp(() {
@@ -17,13 +22,25 @@ void main() {
     setupNock();
   });
 
+  tearDown(() {
+    nock.cleanAll();
+  });
+
   testWidgets(
       "App displays feedback screen about incorrect answer and options.",
-      (tester) async {
-    final myApp = ProviderScope(
-        child: MaterialApp.router(
-      routerConfig: router,
-    ));
+        (tester) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final container = ProviderContainer(
+      overrides: [
+        sharedPreferencesProvider.overrideWithValue(prefs),
+      ],
+    );
+
+    final myApp = UncontrolledProviderScope(
+      container: container,
+      child: MaterialApp(home: QuizApp()),
+    );
     await tester.pumpWidget(myApp);
 
     await tester.pumpAndSettle();

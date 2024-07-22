@@ -10,6 +10,7 @@ import '../screens/question_screen.dart';
 import '../screens/statistics_screen.dart';
 
 final router = GoRouter(
+  initialLocation: '/',
   routes: [
     GoRoute(
       path: '/',

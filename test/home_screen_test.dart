@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nock/nock.dart';
+import 'package:project_1/providers/statistics_provider.dart';
 import 'package:project_1/quiz_app.dart';
 import 'package:project_1/screens/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'mock_data.dart';
+import 'mock_api.dart';
+import 'mock_shared.dart';
 
 void main() {
-  setUpAll(() {
+  setUpAll(() async {
     setupNock();
     TestWidgetsFlutterBinding.ensureInitialized();
+    setupMockSharedPreferences();
   });
 
   setUp(() {
@@ -19,9 +23,20 @@ void main() {
   });
 
   testWidgets("App shows HomeScreen at start.", (tester) async {
-    final myApp = ProviderScope(child: MaterialApp(home: QuizApp()));
+    final prefs = await SharedPreferences.getInstance();
+
+    final container = ProviderContainer(
+      overrides: [
+        sharedPreferencesProvider.overrideWithValue(prefs),
+      ],
+    );
+
+    final myApp = UncontrolledProviderScope(
+      container: container,
+      child: MaterialApp(home: QuizApp()),
+    );
+
     await tester.pumpWidget(myApp);
-    // Wait for the data
     await tester.pumpAndSettle();
 
     final homeScreenFinder = find.byType(HomeScreen);
@@ -29,9 +44,20 @@ void main() {
   });
 
   testWidgets("HomeScreen has topics.", (tester) async {
-    final myApp = ProviderScope(child: MaterialApp(home: QuizApp()));
-    await tester.pumpWidget(myApp);
+    final prefs = await SharedPreferences.getInstance();
 
+    final container = ProviderContainer(
+      overrides: [
+        sharedPreferencesProvider.overrideWithValue(prefs),
+      ],
+    );
+
+    final myApp = UncontrolledProviderScope(
+      container: container,
+      child: MaterialApp(home: QuizApp()),
+    );
+
+    await tester.pumpWidget(myApp);
     await tester.pumpAndSettle();
 
     final description = find.text(
